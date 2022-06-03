@@ -144,4 +144,15 @@ public class UserController {
         }
     }
 
+//    @PostMapping("/users/{userEmail}/logout")
+//    public ResponseEntity<?> logout(@RequestParam String confirmation, @PathVariable String userEmail){
+//        try {
+//            userService.logUserOut(userEmail, confirmation);
+//            return new ResponseEntity<>("Message sent successfully", HttpStatus.OK);
+//        }
+//        catch (TheLetterBoxAppException exception){
+//            return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
 }
