@@ -100,8 +100,8 @@ public class UserServiceImpl implements UserService{
                 .timeStamp(LocalDateTime.now())
                 .title("Your message has been sent")
                 .build();
-        notificationService.saveNotification(senderNotification);
-        theSender.getNotifications().add(senderNotification);
+        Notification savedNotification = notificationService.saveNotification(senderNotification);
+        theSender.getNotifications().add(savedNotification);
         userRepo.save(theSender);
 
         List<String> receiverEmails = new ArrayList<>(message.getReceiverEmail());
@@ -111,10 +111,10 @@ public class UserServiceImpl implements UserService{
                 .timeStamp(LocalDateTime.now())
                 .title("A message has been sent to your inbox")
                 .build();
-        notificationService.saveNotification(receiverNotification);
+        savedNotification = notificationService.saveNotification(receiverNotification);
         for (String receiverEmail : receiverEmails){
             User theReceiver = userRepo.findById(receiverEmail).orElseThrow(()-> new TheLetterBoxAppException("User not found"));
-            theReceiver.getNotifications().add(receiverNotification);
+            theReceiver.getNotifications().add(savedNotification);
             userRepo.save(theReceiver);
         }
     }
