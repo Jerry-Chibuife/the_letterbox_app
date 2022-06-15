@@ -219,4 +219,9 @@ public class UserServiceImpl implements UserService{
         user.setLoggedIn(false);
         userRepo.save(user);
     }
+
+    @Override
+    public User retrieveUserByEmail(String email) {
+        return userRepo.findUserByEmail(email).orElseThrow(()-> new TheLetterBoxAppException("User not found"));
+    }
 }

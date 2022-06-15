@@ -8,6 +8,7 @@ import com.thejerryuc.theletterbox.dtos.responses.UserDto;
 import com.thejerryuc.theletterbox.models.MailBox;
 import com.thejerryuc.theletterbox.models.MailBoxes;
 import com.thejerryuc.theletterbox.models.Message;
+import com.thejerryuc.theletterbox.models.User;
 
 import java.util.List;
 
@@ -44,4 +45,6 @@ public interface UserService {
     void deleteNotificationFromUserList(String email, String id);
 
     void logUserOut(String userEmail, String confirmation);
+
+    User retrieveUserByEmail(String email);
 }
