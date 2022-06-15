@@ -38,6 +38,10 @@ public class User {
     @Setter
     private boolean isLoggedIn;
 
+//    @Getter
+//    @Setter
+//    private String image;
+
     @Getter
     @Setter
     private List<Notification> notifications;

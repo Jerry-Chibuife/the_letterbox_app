@@ -25,9 +25,9 @@ public interface UserService {
 
     void sendMessageToUser(Message message);
 
-    List<Message> retrieveMessageFromUserInbox(MessageRetrievalRequest messageRetrievalRequest);
+    List<Message> retrieveMessageFromUserInboxContaining(MessageRetrievalRequest messageRetrievalRequest);
 
-    List<Message> retrieveMessageFromUserSentBox(MessageRetrievalRequest messageRetrievalRequest);
+    List<Message> retrieveMessageFromUserSentBoxContaining(MessageRetrievalRequest messageRetrievalRequest);
 
     Message retrieveMessageFromUserSentBox(String messageId);
 

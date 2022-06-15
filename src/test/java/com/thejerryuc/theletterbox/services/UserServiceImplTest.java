@@ -174,11 +174,11 @@ class UserServiceImplTest {
         userService.sendMessageToUser(message);
         userService.logUserIn(request2.getEmail(), request2.getPassword());
         MessageRetrievalRequest messageRetrievalRequest = new MessageRetrievalRequest(request2.getEmail(), message.getSenderEmail(), message.getContent(), message.getSubject());
-        List<Message> inboxMessages = userService.retrieveMessageFromUserInbox(messageRetrievalRequest);
+        List<Message> inboxMessages = userService.retrieveMessageFromUserInboxContaining(messageRetrievalRequest);
         assertEquals(1, inboxMessages.size());
         assertEquals("Test Message", inboxMessages.get(0).getSubject());
         messageRetrievalRequest = new MessageRetrievalRequest(request.getEmail(), message.getSenderEmail(), message.getContent(), message.getSubject());
-        List<Message> sentBoxMessages = userService.retrieveMessageFromUserSentBox(messageRetrievalRequest);
+        List<Message> sentBoxMessages = userService.retrieveMessageFromUserSentBoxContaining(messageRetrievalRequest);
         assertEquals(1, sentBoxMessages.size());
         assertEquals("Test Message", sentBoxMessages.get(0).getSubject());
     }

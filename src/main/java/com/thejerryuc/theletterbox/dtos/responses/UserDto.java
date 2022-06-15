@@ -18,4 +18,5 @@ public class UserDto {
     private String lastName;
     private boolean isLoggedIn;
     private List<Notification> notifications;
+//    private String image;
 }

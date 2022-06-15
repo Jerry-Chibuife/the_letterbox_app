@@ -5,14 +5,19 @@ import com.thejerryuc.theletterbox.dtos.requests.AccountCreationRequest;
 import com.thejerryuc.theletterbox.exceptions.TheLetterBoxAppException;
 import com.thejerryuc.theletterbox.models.Message;
 import com.thejerryuc.theletterbox.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+
+@Slf4j
 @RestController
+@CrossOrigin(origins = "http://localhost:3000/")
 @RequestMapping("/api/v1/theletterbox")
 public class UserController {
 
@@ -33,10 +38,20 @@ public class UserController {
     public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password){
         try {
             userService.logUserIn(email, password);
-            return new ResponseEntity<>(userService.retrieveUserMailBoxes(email), HttpStatus.OK);
+            return new ResponseEntity<>(userService.retrieveUser(email), HttpStatus.OK);
         }
         catch (TheLetterBoxAppException exception){
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/users/getMailBoxes")
+    public ResponseEntity<?> retrieveMailBoxes(@RequestParam String email){
+        try {
+            return new ResponseEntity<>(userService.retrieveUserMailBoxes(email), HttpStatus.OK);
+        }
+        catch (TheLetterBoxAppException exception){
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -83,6 +98,7 @@ public class UserController {
     @PostMapping("/users/user/sendMessage")
     public ResponseEntity<?> sendMessage(@RequestBody Message message){
         try {
+            message.setCreationTime(LocalDateTime.now());
             userService.sendMessageToUser(message);
             return new ResponseEntity<>("Message sent successfully", HttpStatus.OK);
         }

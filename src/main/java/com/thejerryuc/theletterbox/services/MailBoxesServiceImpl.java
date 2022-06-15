@@ -11,10 +11,7 @@ import com.thejerryuc.theletterbox.repositories.MailBoxesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MailBoxesServiceImpl implements MailBoxesService{
@@ -76,7 +73,11 @@ public class MailBoxesServiceImpl implements MailBoxesService{
 
     @Override
     public Message retrieveMessageFromInboxWith(String messageId) {
-        return mailBoxService.retrieveMessageFromInboxUsing(messageId);
+        Message message = mailBoxService.retrieveMessageFromInboxUsing(messageId);
+        if(Objects.equals(message.getMessageId(), messageId)){
+            return message;
+        }
+        throw new TheLetterBoxAppException("Wrong message");
     }
 
     @Override
@@ -86,7 +87,11 @@ public class MailBoxesServiceImpl implements MailBoxesService{
 
     @Override
     public Message retrieveMessageFromSentBoxWith(String messageId) {
-        return mailBoxService.retrieveMessageFromSentBoxUsing(messageId);
+        Message message = mailBoxService.retrieveMessageFromSentBoxUsing(messageId);
+        if(Objects.equals(message.getMessageId(), messageId)){
+            return message;
+        }
+        throw new TheLetterBoxAppException("Wrong message");
     }
 
     @Override

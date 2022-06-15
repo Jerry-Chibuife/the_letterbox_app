@@ -120,18 +120,22 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<Message> retrieveMessageFromUserInbox(MessageRetrievalRequest messageRetrievalRequest) {
+    public List<Message> retrieveMessageFromUserInboxContaining(MessageRetrievalRequest messageRetrievalRequest) {
         return new ArrayList<>(mailBoxesService.retrieveMessagesFromInboxRelatingTo(messageRetrievalRequest));
     }
 
     @Override
-    public List<Message> retrieveMessageFromUserSentBox(MessageRetrievalRequest messageRetrievalRequest) {
+    public List<Message> retrieveMessageFromUserSentBoxContaining(MessageRetrievalRequest messageRetrievalRequest) {
         return new ArrayList<>(mailBoxesService.retrieveMessagesFromSentBoxRelatingTo(messageRetrievalRequest));
     }
 
     @Override
     public Message retrieveMessageFromUserSentBox(String messageId) {
-        return mailBoxesService.retrieveMessageFromSentBoxWith(messageId);
+        Message message = mailBoxesService.retrieveMessageFromSentBoxWith(messageId);
+        if(Objects.equals(message.getMessageId(), messageId)){
+            return message;
+        }
+        throw new TheLetterBoxAppException("Wrong message");
     }
 
     @Override
@@ -145,7 +149,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Message retrieveMessageFromUserInbox(String messageId) {
-        return mailBoxesService.retrieveMessageFromInboxWith(messageId);
+        Message message = mailBoxesService.retrieveMessageFromInboxWith(messageId);
+        if(Objects.equals(message.getMessageId(), messageId)){
+            return message;
+        }
+        throw new TheLetterBoxAppException("Wrong message");
     }
 
     @Override
